@@ -1,7 +1,15 @@
 import React from "react";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import {IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, makeStyles} from "@material-ui/core";
+import {
+    Checkbox,
+    IconButton,
+    List,
+    ListItem,
+    ListItemSecondaryAction,
+    ListItemText,
+    makeStyles
+} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     margin: {
@@ -23,15 +31,24 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Task = ({items, removeItem, editItem}) => {
+const Task = ({items, removeItem, editItem, changeCheck}) => {
     const classes = useStyles();
 
     return (
         <List component="nav" aria-label="main mailbox folders" className={classes.root}>
             {items.map((item) => {
-                const {id, title} = item;
+                const {id, title, status} = item;
+                const labelId = `checkbox-list-label-${id}`;
                 return (
                     <ListItem key={id} alignItems="flex-start">
+                        <Checkbox
+                            edge="start"
+                            checked={status}
+                            tabIndex={-1}
+                            disableRipple
+                            inputProps={{ 'aria-labelledby': labelId }}
+                            onChange={() => changeCheck(id, status)}
+                        />
                         <ListItemText disableTypography={false}
                                       primaryTypographyProps={{ style: { whiteSpace: "normal" } }}
                                       className={classes.multiline}>

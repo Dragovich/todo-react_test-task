@@ -28,6 +28,7 @@ export const App = () => {
     const [list, setList] = useState(getLocalStorage());
     const [isEditing, setIsEditing] = useState(false);
     const [editID, setEditID] = useState(null);
+    const [status, setStatus] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -45,7 +46,7 @@ export const App = () => {
                 setEditID(null);
                 setIsEditing(false);
             } else {
-                const newItem = {id: new Date().getTime().toString(), title: name};
+                const newItem = {id: new Date().getTime().toString(), title: name, status: false};
 
                 setList([...list, newItem]);
                 setName("");
@@ -63,6 +64,17 @@ export const App = () => {
         setEditID(id);
         setName(specificItem.title);
     };
+
+    const changeCheck = (id, status) => {
+        setList(
+            list.map((item) => {
+                if (item.id === id) {
+                    return {...item, status: !status};
+                }
+                return item;
+            })
+        );
+    }
 
     useEffect(() => {
         localStorage.setItem("list", JSON.stringify(list));
@@ -88,7 +100,8 @@ export const App = () => {
                 <div className="task-body">
                     <Task items={list}
                           removeItem={removeItem}
-                          editItem={editItem}/>
+                          editItem={editItem}
+                          changeCheck={changeCheck}/>
                 </div>
             )}
         </Container>

@@ -8,7 +8,7 @@ import {
     ListItem,
     ListItemSecondaryAction,
     ListItemText,
-    makeStyles
+    makeStyles,
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -26,6 +26,8 @@ const useStyles = makeStyles((theme) => ({
     multiline: {
         '& span': {
             width: '80%',
+            lineHeight: '34px',
+            verticalAlign: 'middle',
         },
         wordWrap: 'break-word',
     }
@@ -46,14 +48,12 @@ const Task = ({items, removeItem, editItem, changeCheck}) => {
                             checked={status}
                             tabIndex={-1}
                             disableRipple
-                            inputProps={{ 'aria-labelledby': labelId }}
+                            inputProps={{'aria-labelledby': labelId}}
                             onChange={() => changeCheck(id, status)}
                         />
                         <ListItemText disableTypography={false}
-                                      primaryTypographyProps={{ style: { whiteSpace: "normal" } }}
-                                      className={classes.multiline}>
-                            {title}
-                        </ListItemText>
+                                      primaryTypographyProps={{style: {whiteSpace: "normal"}}}
+                                      className={classes.multiline}>{title}</ListItemText>
                         <ListItemSecondaryAction>
                             <IconButton aria-label="delete"
                                         className={classes.margin}
